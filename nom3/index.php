@@ -6,7 +6,10 @@
 
   function conn(){
     global $db;
-    include('connection.php'); // подключает файл connection.php, который содержит код для соединения с базой данных
+    $user = 'u68785'; // Заменить на ваш логин uXXXXX
+    $pass = '3646846'; // Заменить на пароль
+    $db = new PDO('mysql:host=localhost;dbname=u68785', $user, $pass,
+      [PDO::ATTR_PERSISTENT => true, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]); // Заменить test на имя БД, совпадает с логином uXXXXX
   }
   // ОБРАБОТКА GET-ЗАПРОСОВ
   if ($_SERVER['REQUEST_METHOD'] == 'GET') {
@@ -99,53 +102,53 @@
 
 // ЗАПРОС К БД ДЛЯ ЯЗЫКОВ (таблица languages)
 
-//   conn();
-//   $inQuery = implode(',', array_fill(0, count($like_lang), '?'));
-//   try {
-//     $dbLangs = $db->prepare("SELECT id, name FROM languages WHERE name IN ($inQuery)");
-//     foreach ($like_lang as $key => $value) {
-//       $dbLangs->bindValue(($key+1), $value);
-//     }
-//     $dbLangs->execute();
-//     $languages = $dbLangs->fetchAll(PDO::FETCH_ASSOC);
-//   }
-//   catch(PDOException $e){
-//     print('Error : ' . $e->getMessage());
-//     exit();
-//   }
+  conn();
+  $inQuery = implode(',', array_fill(0, count($like_lang), '?'));
+  try {
+    $dbLangs = $db->prepare("SELECT id, name FROM languages WHERE name IN ($inQuery)");
+    foreach ($like_lang as $key => $value) {
+      $dbLangs->bindValue(($key+1), $value);
+    }
+    $dbLangs->execute();
+    $languages = $dbLangs->fetchAll(PDO::FETCH_ASSOC);
+  }
+  catch(PDOException $e){
+    print('Error : ' . $e->getMessage());
+    exit();
+  }
   
-//   if($dbLangs->rowCount() != count($like_lang)){
-//     $errors = 'Неверно выбраны языки';
-//   }
-//   elseif(strlen($biography) > 65535){
-//     $errors = 'Длина поля "Биография" > 65 535 символов';
-//   }
+  if($dbLangs->rowCount() != count($like_lang)){
+    $errors = 'Неверно выбраны языки';
+  }
+  elseif(strlen($biography) > 65535){
+    $errors = 'Длина поля "Биография" > 65 535 символов';
+  }
 
-//   if ($errors != '') {
-//     errp($errors);
-//   }
+  if ($errors != '') {
+    errp($errors);
+  }
 
-// // ЗАПИСЬ ДАННЫХ В БД (записывает данные пользователя в таблицу form_data, языки программирования в form_data_lang)
-// /*  INSERT INTO form_data сохраняет пользователя
-//     INSERT INTO form_data_lang связывает его с языками программирования*/
-//   try {
-//     $stmt = $db->prepare("INSERT INTO form_data (fio, phone, email, birthday, gender, biography) VALUES (?, ?, ?, ?, ?, ?)");
-//     $stmt->execute([$fio, $phone, $email, $birthday, $gender, $biography]);
-//     $fid = $db->lastInsertId();
-//     $stmt1 = $db->prepare("INSERT INTO form_data_lang (id_form, id_lang) VALUES (?, ?)");
-//     foreach($languages as $row){
-//         $stmt1->execute([$fid, $row['id']]);
-//     }
-//   }
-//   catch(PDOException $e){
-//     print('Error : ' . $e->getMessage());
-//     exit();
-//   }
+// ЗАПИСЬ ДАННЫХ В БД (записывает данные пользователя в таблицу form_data, языки программирования в form_data_lang)
+/*  INSERT INTO form_data сохраняет пользователя
+    INSERT INTO form_data_lang связывает его с языками программирования*/
+  try {
+    $stmt = $db->prepare("INSERT INTO form_data (fio, phone, email, birthday, gender, biography) VALUES (?, ?, ?, ?, ?, ?)");
+    $stmt->execute([$fio, $phone, $email, $birthday, $gender, $biography]);
+    $fid = $db->lastInsertId();
+    $stmt1 = $db->prepare("INSERT INTO form_data_lang (id_form, id_lang) VALUES (?, ?)");
+    foreach($languages as $row){
+        $stmt1->execute([$fid, $row['id']]);
+    }
+  }
+  catch(PDOException $e){
+    print('Error : ' . $e->getMessage());
+    exit();
+  }
 
-//   header('Location: ?save=1');
+  header('Location: ?save=1');
 
-// // form_data — основная таблица с пользователями. Содержит id fio phone email birthday gender biography
-// // form_data_lang — связь пользователя с языками. Cодержить id formi и id language получается?
-// // languages — список языков программирования. Содержит id languagi и name 
-// // как-то.. подключаем к connection.php (файл который я не знаю как создать)
+// form_data — основная таблица с пользователями. Содержит id fio phone email birthday gender biography
+// form_data_lang — связь пользователя с языками. Cодержить id formi и id language получается?
+// languages — список языков программирования. Содержит id languagi и name 
+// как-то.. подключаем к connection.php (файл который я не знаю как создать)
 
