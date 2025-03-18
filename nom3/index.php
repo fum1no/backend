@@ -46,13 +46,16 @@
   $fio = (isset($_POST['fio']) ? $_POST['fio'] : '');
   $phone = (isset($_POST['phone']) ? $_POST['phone'] : '');
   $email = (isset($_POST['email']) ? $_POST['email'] : '');
-  $birthday = (isset($_POST['birthday']) ? strtotime($_POST['birthday']) : '');
+  $buf_birthday = (isset($_POST['birthday']) ? $_POST['birthday'] : '');
   $gender = (isset($_POST['gender']) ? $_POST['gender'] : '');
   $like_lang = (isset($_POST['like_lang']) ? $_POST['like_lang'] : '');
   $biography = (isset($_POST['biography']) ? $_POST['biography'] : '');
   $oznakomlen = (isset($_POST['oznakomlen']) ? $_POST['oznakomlen'] : '');
 
-
+  $birthday = '';
+  if($buf_birthday!=''){
+  $birthday = strtotime($_POST['birthday']);
+  }
   // ПРОВЕРКА ДАННЫХ (фильтрует и проверяет данные перед записью в БД)
   $phone = preg_replace('/\D/', '', $phone);
   
@@ -133,7 +136,7 @@
     INSERT INTO form_data_lang связывает его с языками программирования*/
   try {
     $stmt = $db->prepare("INSERT INTO form_data (fio, phone, email, birthday, gender, biography) VALUES (?, ?, ?, ?, ?, ?)");
-    $stmt->execute([$fio, $phone, $email, $birthday, $gender, $biography]);
+    $stmt->execute([$fio, $phone, $email, $buf_birthday, $gender, $biography]);
     $fid = $db->lastInsertId();
     $stmt1 = $db->prepare("INSERT INTO form_data_lang (id_form, id_lang) VALUES (?, ?)");
     foreach($languages as $row){
