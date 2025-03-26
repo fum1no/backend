@@ -6,7 +6,7 @@
       <link rel="stylesheet" href="libs/bootstrap-4.0.0-dist/css/bootstrap.min.css">
       <link rel="stylesheet" href="style8.css">
       <script src="libs/jquery-3.4.1.min.js"></script>
-      <title>Задание 8</title>
+      <title>Задание 3</title>
   </head>
   <body>
   <div class="pform">
