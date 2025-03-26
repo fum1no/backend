@@ -151,7 +151,5 @@
   header('Location: ?save=1');
 
 // form_data — основная таблица с пользователями. Содержит id fio phone email birthday gender biography
-// form_data_lang — связь пользователя с языками. Cодержить id formi и id language получается?
-// languages — список языков программирования. Содержит id languagi и name 
-// как-то.. подключаем к connection.php (файл который я не знаю как создать)
-
+// form_data_lang — связь пользователя с языками. Cодержить id formi и id language 
+// languages — список языков программирования. Содержит id language и name 
