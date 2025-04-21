@@ -151,7 +151,7 @@
     
     try {
       $stmt = $db->prepare("INSERT INTO form_data (fio, phone, email, birthday, gender, biography) VALUES (?, ?, ?, ?, ?, ?)");
-      $stmt->execute([$fio, $phone, $email, strtotime($birthday), $gender, $biography]);
+      $stmt->execute([$fio, $phone, $email, $birthday, $gender, $biography]);
       $fid = $db->lastInsertId();
       $stmt1 = $db->prepare("INSERT INTO form_data_lang (id_form, id_lang) VALUES (?, ?)");
       foreach($languages as $row){
