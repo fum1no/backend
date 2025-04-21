@@ -1,18 +1,20 @@
 <!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="libs/bootstrap-4.0.0-dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="style8.css">
-    <script src="libs/jquery-3.4.1.min.js"></script>
-    <title>Задание 4</title>
-</head>
-<body>
-<div class="pform">
-    <form action="" method="post">
+  <html lang="ru">
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link rel="stylesheet" href="libs/bootstrap-4.0.0-dist/css/bootstrap.min.css">
+      <link rel="stylesheet" href="style8.css">
+      <script src="libs/jquery-3.4.1.min.js"></script>
+      <title>Задание 4</title>
+  </head>
+  <body>
+  <div class="pform">
+    <form action="" method="post"> <!-- связывает форму с сервером, так как отправляет данные в index.php -->
         <h3>Форма</h3>
-        <div class="message"><?php if(isset($messages['success'])) echo $messages['success']; ?></div>
+ <!--Поля name="fio", name="phone" name="email" name="birthday" name="gender" 
+ будут отправлены в $_POST['fio'],  $_POST['phone'],  $_POST['email'], $_POST['birthday'], $_POST['gender'] на сервер -->
+            <div class="message"><?php if(isset($messages['success'])) echo $messages['success']; ?></div>
         <div>
             <input class="w100 <?php echo ($errors['fio'] != NULL) ? 'borred' : ''; ?>" value="<?php echo $values['fio']; ?>" type="text" name="fio" placeholder="ФИО">
             <div class="errpodinp"><?php echo $messages['fio']?></div>
@@ -43,6 +45,7 @@
             <div class="errpodinp"><?php echo $messages['gender']?></div>
         </div>
         <div class="ent">
+            <!-- Тк можно выбрать несколько языков программирования, то name="like_lang[]" попадет в $_POST['like_lang'] на сервер в качестве массива  -->
             <select class="w100 <?php echo ($errors['like_lang'] != NULL) ? 'borred' : ''; ?>" name="like_lang[]" id="like_lang" multiple="multiple">
                 <option disabled selected>Любимый язык программирования</option>
                 <option value="Pascal" <?php echo (in_array('Pascal', $like_langsa)) ? 'selected' : ''; ?>>Pascal</option>
@@ -59,6 +62,7 @@
             </select>
             <div class="errpodinp"><?php echo $messages['like_lang']?></div>
         </div>
+        <!-- name="biography" и name="oznakomlen" =>  $_POST['biography'] и $_POST['oznakomlen']-->
         <div>
             <textarea name="biography" placeholder="Биография" class="<?php echo ($errors['biography'] != NULL) ? 'borred' : ''; ?>"><?php echo $values['biography']; ?></textarea>
             <div class="errpodinp"><?php echo $messages['biography']?></div>
@@ -68,6 +72,7 @@
             <label for="oznakomlen" class="<?php echo ($errors['oznakomlen'] != NULL) ? 'colred' : ''; ?>">С контрактом ознакомлен (а)</label>
             <div class="errpodinp"><?php echo $messages['oznakomlen']?></div>
         </div>
+        <!-- кнопка отправки, которая запускает POST-запрос в index.php оправляет все данные в index.php -->
         <button type="submit">Отправить</button>
     </form>
   </div>
