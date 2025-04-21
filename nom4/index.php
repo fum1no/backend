@@ -1,6 +1,9 @@
 <?php
   header('Content-Type: text/html; charset=UTF-8');
-
+  function del_cook($cook, $del_val = 0){
+    setcookie($cook.'_error', '', time() - 30 * 24 * 60 * 60);
+    // if($del_val) setcookie($cook.'_value', '', time() - 30 * 24 * 60 * 60);
+  }
   $db = ''; // переменная для хранения соединения с БД
 
   function conn(){
