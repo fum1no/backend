@@ -29,10 +29,13 @@
   if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
   }
-  else{
-    // TODO: Проверть есть ли такой логин и пароль в базе данных.
-    // Выдать сообщение об ошибках.
-    require('connection.php');
+else {
+  $user = 'u68785';
+  $pass = '3646846';
+  $db = new PDO('mysql:host=localhost;dbname=u68785', $user, $pass, [
+    PDO::ATTR_PERSISTENT => true,
+    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
+  ]);
     $login = $_POST['login'];
     $password = md5($_POST['password']);
     try {
