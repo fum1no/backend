@@ -48,7 +48,7 @@
       del_cook($enName);
       return;
     }
-    
+
     if (!empty($_COOKIE['save'])) {
       setcookie('save', '', 100000);
       setcookie('login', '', 100000);
@@ -70,8 +70,8 @@
     val_empty('like_lang', $like_lang);
     val_empty('biography', $biography);
     val_empty('oznakomlen', $oznakomlen);
-
-     $like_langsa = explode(',', $values['like_lang']);
+    
+    $like_langsa = explode(',', $values['like_lang']);
 
     // Если нет предыдущих ошибок ввода, есть кука сессии, начали сессию и
     // ранее в сессию записан факт успешного логина.
@@ -110,9 +110,9 @@
       // printf('Вход с логином %s, uid %d', $_SESSION['login'], $_SESSION['user_id']);
     }
     
-    include('form.php'); // подключает HTML-форму form.php для ввода данных
+    include('form.php');
   }
-    // Иначе, если запрос был методом POST, т.е. нужно проверить данные и сохранить их в XML-файл.
+  // Иначе, если запрос был методом POST, т.е. нужно проверить данные и сохранить их в XML-файл.
   else {
     $fio = (!empty($_POST['fio']) ? $_POST['fio'] : '');
     $phone = (!empty($_POST['phone']) ? $_POST['phone'] : '');
@@ -174,7 +174,7 @@
       }
     }
     if(!val_empty('birthday', "Выберите дату рождения", empty($birthday))){
-      val_empty('birthday', "Неверно введена дата рождения, дата больше настоящей", ("now" < $birthday));
+      val_empty('birthday', "Неверно введена дата рождения, дата больше настоящей", (strtotime("now") < strtotime($birthday)));
     }
     val_empty('gender', "Выберите пол", (empty($gender) || !preg_match('/^(male|female)$/', $gender)));
     if(!val_empty('like_lang', "Выберите хотя бы один язык", empty($like_lang))){
@@ -221,7 +221,7 @@
     if ($log) {
       
       $stmt = $db->prepare("UPDATE form_data SET fio = ?, phone = ?, email = ?, birthday = ?, gender = ?, biography = ? WHERE user_id = ?");
-      $stmt->execute([$fio, $phone, $email, $birthday, $gender, $biography, $_SESSION['user_id']]);
+      $stmt->execute([$fio, $phone, $email, strtotime($birthday), $gender, $biography, $_SESSION['user_id']]);
 
       $stmt = $db->prepare("DELETE FROM form_data_lang WHERE id_form = ?");
       $stmt->execute([$_SESSION['form_id']]);
@@ -279,6 +279,7 @@
     // Делаем перенаправление.
     header('Location: ./');
   }
+
 // form_data — основная таблица с пользователями. Содержит id fio phone email birthday gender biography
 // form_data_lang — связь пользователя с языками. Cодержить id formi и id language 
 // languages — список языков программирования. Содержит id language и name 
