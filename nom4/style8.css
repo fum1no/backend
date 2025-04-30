@@ -5,6 +5,9 @@ body{
 *{
     box-sizing: border-box;
 }
+label{
+    margin-bottom: 0;
+}
 form{
     width: 400px;
     border: 1px #aaa solid;
@@ -64,22 +67,20 @@ form button:active{
     filter: brightness(120%);
 }
 .message{
-    position: absolute;
-    top: 10%;
-    font-size: 24px;
+    font-size: 21px;
     color: green;
     text-align: center;
-    left: 0;
-    right: 0;
+    margin-bottom: 20px;
 }
 .messageError{
-    position: absolute;
-    top: 30%;
-    font-size: 24px;
     color: red;
-    text-align: center;
-    left: 0;
-    right: 0;
+    font-size: 15px;
+}
+.borred{
+    border-color: red;
+}
+.colred{
+    color: red;
 }
 .pform{
     display: flex;
