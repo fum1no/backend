@@ -1,8 +1,11 @@
 <?php
   header('Content-Type: text/html; charset=UTF-8');
-  function del_cook($cook, $del_val = 0){
-    setcookie($cook.'_error', '', time() - 30 * 24 * 60 * 60);
-    // if($del_val) setcookie($cook.'_value', '', time() - 30 * 24 * 60 * 60);
+  session_start();
+  $log = !empty($_SESSION['login']);
+  
+  function del_cook($cook, $vals = 0){
+    setcookie($cook.'_error', '', 100000);
+    if($vals) setcookie($cook.'_value', '', 100000);
   }
   $db = ''; // переменная для хранения соединения с БД
 
