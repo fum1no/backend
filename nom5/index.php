@@ -221,7 +221,7 @@
     if ($log) {
       
       $stmt = $db->prepare("UPDATE form_data SET fio = ?, phone = ?, email = ?, birthday = ?, gender = ?, biography = ? WHERE user_id = ?");
-      $stmt->execute([$fio, $phone, $email, strtotime($birthday), $gender, $biography, $_SESSION['user_id']]);
+      $stmt->execute([$fio, $phone, $email, $birthday, $gender, $biography, $_SESSION['user_id']]);
 
       $stmt = $db->prepare("DELETE FROM form_data_lang WHERE id_form = ?");
       $stmt->execute([$_SESSION['form_id']]);
