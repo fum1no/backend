@@ -34,10 +34,10 @@
     // Выдать сообщение об ошибках.
     require('connection.php');
     $login = $_POST['login'];
-    $password = md5($_POST['password']);
+    $pass_hash = md5($_POST['pass_hash']);
     try {
-      $stmt = $db->prepare("SELECT id FROM users WHERE login = ? and password = ?");
-      $stmt->execute([$login, $password]);
+      $stmt = $db->prepare("SELECT id FROM users WHERE login = ? and pass_hash = ?");
+      $stmt->execute([$login, $pass_hash]);
       $its = $stmt->rowCount();
       if($its){
         $uid = $stmt->fetchAll(PDO::FETCH_ASSOC)[0]['id'];
@@ -80,7 +80,7 @@
           <input class="w100" type="text" name="login" placeholder="Логин">
         </div>
         <div>
-          <input class="w100" type="text" name="password" placeholder="Пароль">
+          <input class="w100" type="text" name="pass_hash" placeholder="Пароль">
         </div>
         <button type="submit">Войти</button>
     </form>
